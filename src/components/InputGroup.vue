@@ -4,11 +4,11 @@
     <div class="input-group">
       <input
         v-bind="$attrs"
+        :class="value.length <= 0 ? 'empty' : null"
         class="form-control"
         v-model="value"
         :id="lowerName"
         @change="$emit('change', value)"
-        @invalid="handleInvalid"
         @blur="recheck"
       />
     </div>
@@ -37,12 +37,16 @@ export default {
   },
   methods: {
     handleInvalid(event) {
+      event.target.checkValidity();
+      console.log(event.target.checkValidity());
       this.setValidationMsg(event.target);
       this.error = event.target.validationMessage;
     },
     recheck(event) {
       if (event.target.checkValidity()) {
         this.error = null;
+      } else {
+        this.handleInvalid(event);
       }
     },
     setValidationMsg(input) {
@@ -73,10 +77,12 @@ export default {
 </script>
 
 <style scoped>
-input:valid:not(:empty) {
-  border-color: green;
+input:not(.empty):valid {
+  border-color: greenyellow;
+  color: greenyellow;
 }
-input:invalid:not(:empty) {
+input:not(.empty):invalid {
   border-color: red;
+  color: red;
 }
 </style>
