@@ -85,4 +85,8 @@ input:not(.empty):invalid {
   border-color: red;
   color: red;
 }
+input:not(.empty)[invalid] {
+  border-color: red;
+  color: red;
+}
 </style>

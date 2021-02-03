@@ -1,11 +1,15 @@
 <template>
   <form novalidate @submit.prevent="handleForm">
+    <p v-if="sentError" class="text-danger fs-5 ps-2">
+      {{ sentError }}
+    </p>
     <InputGroup
       type="email"
       name="Usuario"
       placeholder="usuario@mail.com"
       required
       @change="changeName"
+      :invalid="sentError !== null"
     />
     <InputGroup
       type="password"
@@ -14,8 +18,17 @@
       required
       minlength="6"
       @change="changePassword"
+      :invalid="sentError !== null"
     />
-    <Btn type="submit" color="primary" text="Ingresar" />
+    <Btn
+      v-if="sending"
+      type="button"
+      color="info"
+      text="Enviando"
+      class="w-100"
+      disabled
+    />
+    <Btn v-else type="submit" color="primary" text="Ingresar" class="w-100" />
   </form>
 </template>
 
@@ -34,6 +47,7 @@ export default {
       name: "",
       password: "",
       sending: null,
+      sentError: null,
     };
   },
   methods: {
@@ -44,18 +58,26 @@ export default {
       this.password = value;
     },
     handleForm(event) {
+      this.sending = true;
       const form = event.target;
       if (form.checkValidity()) {
         console.log("submitting");
+        const url = "https://admin.localwobiz.com/login";
         const user = {
           username: this.name,
           password: this.password,
         };
         this.sending = true;
         axios
-          .post("https://admin.localwobiz.com/login", user)
-          .then((result) => {
-            console.log(result);
+          .post(url, user)
+          .then((response) => {
+            const status = response.status;
+            const res = response.data;
+            if (status === 200) {
+              this.$emit("login", res);
+            } else if (status === 401) {
+              this.loginError(res);
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -64,6 +86,10 @@ export default {
             this.sending = false;
           });
       }
+    },
+    loginError(error) {
+      // Recomendaria pone run error generico para no dar mas informacion de la necesaria
+      this.sentError = error.message;
     },
   },
 };

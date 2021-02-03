@@ -13,7 +13,8 @@
             alt="Logo"
           />
         </h1>
-        <LoginForm />
+        <LoginForm v-if="user === null" @login="login" />
+        <h2 v-else>{{ user }} estas logeado!</h2>
       </section>
     </div>
   </main>
@@ -26,6 +27,18 @@ export default {
   name: "App",
   components: {
     LoginForm,
+  },
+  data() {
+    return {
+      user: null,
+    };
+  },
+  methods: {
+    login(data) {
+      this.$cookies.set("user_id", data.user_id, data.expires);
+      this.$cookies.set("token", data.token, data.expires);
+      this.user = data.user_id;
+    },
   },
 };
 </script>
