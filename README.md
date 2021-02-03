@@ -1,24 +1,23 @@
-# wobiz-login
+# Wobiz Login
 
-## Project setup
-```
+Bajo los requerimientos del pdf se desarrollo este pequeño front
+
+## Para usar en desarrollo
+
+```bash
 npm install
+npm start
 ```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+### Y si queremos compilar para produccion
 
-### Compiles and minifies for production
-```
+```bash
 npm run build
 ```
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Tecnologias Usadas
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+- [Vue](https://github.com/vuejs/vue)
+- [Bootstrap 5](https://github.com/twbs/bootstrap)
+- [Axios](https://github.com/axios/axios)
+- [vue-cookies](https://github.com/cmp-cc/vue-cookies)

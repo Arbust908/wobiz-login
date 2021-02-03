@@ -12,6 +12,7 @@
 
 <script>
 export default {
+  name: "Btn",
   props: {
     text: {
       type: String,

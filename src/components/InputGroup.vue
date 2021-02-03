@@ -18,6 +18,7 @@
 
 <script>
 export default {
+  name: "InputGroup",
   inheritAttrs: false,
   props: {
     name: {

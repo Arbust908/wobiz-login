@@ -38,6 +38,7 @@ import InputGroup from "./InputGroup.vue";
 import Btn from "./Btn.vue";
 
 export default {
+  name: "LoginForm",
   components: {
     InputGroup,
     Btn,
